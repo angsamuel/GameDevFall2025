@@ -30,7 +30,7 @@ public class CameraFollow : MonoBehaviour
         speedX *= Time.deltaTime;
         speedY *= Time.deltaTime;
 
-        xRotation += speedX;
+        xRotation -= speedX;
         yRotation += speedY;
 
         xRotation = Mathf.Clamp(xRotation, minPitch, maxPitch);

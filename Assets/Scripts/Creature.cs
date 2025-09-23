@@ -8,11 +8,15 @@ public class Creature : MonoBehaviour
 {
 
 
+    [Header("Equipment")]
+    public Blaster blaster;
+
 
     [Header("Stats")]
     int _maxHealth = 99;
     public int currentHealth = 9;
     public float rotationSpeed = 100f;
+
 
     [Header("Gravity and Ground")]
     public float gravity = -9.81f;
@@ -62,7 +66,9 @@ public class Creature : MonoBehaviour
 
         SimulateGravity();
     }
-
+    public void UseBlaster(){
+        blaster.Blast();
+    }
     void SimulateGravity(){
 
         if(IsOnGround()){

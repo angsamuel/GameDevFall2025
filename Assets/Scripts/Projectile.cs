@@ -11,13 +11,18 @@ public class Projectile : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        rb.linearVelocity = new Vector3(0,0,10);
+        Destroy(this.gameObject, 30);
+        //rb.linearVelocity = new Vector3(0,0,10);
     }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+
+    public void Shoot(Vector3 newVelocity){
+        rb.linearVelocity = newVelocity;
     }
 
     void OnTriggerEnter(Collider other)

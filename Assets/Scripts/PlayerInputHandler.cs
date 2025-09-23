@@ -69,7 +69,9 @@ public class PlayerInputHandler : MonoBehaviour
         //adjusting camera rotation
         cameraFollow.AdjustRotation(Input.GetAxis("Mouse X") * cameraRotateSpeed, Input.GetAxis("Mouse Y") * cameraRotateSpeed);
 
-
+        if(Input.GetKey(KeyCode.Mouse0)){
+            playerCreature.UseBlaster();
+        }
 
 
         if (Input.GetKeyDown(KeyCode.Space)){
