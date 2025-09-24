@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections;
 
 [RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(Health))]
 public class Creature : MonoBehaviour
 {
 
