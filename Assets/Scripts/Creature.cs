@@ -5,6 +5,7 @@ using System.Collections;
 
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(Health))]
+[RequireComponent(typeof(AnimationStateChanger))]
 public class Creature : MonoBehaviour
 {
 
@@ -26,6 +27,7 @@ public class Creature : MonoBehaviour
     public Transform groundReferenceTransform;
     public LayerMask groundLayerMask;
 
+
     public int MaxHealth
     {
         get => _maxHealth;
@@ -41,7 +43,11 @@ public class Creature : MonoBehaviour
             }
         }
     }
-    public float _baseSpeed = 10;
+
+
+    [Header("Animation")]
+    public float walkAnimationSpeedMultiplier = 1.75f;
+    public float baseWalkSpeed = 8;
 
 
 
@@ -50,8 +56,11 @@ public class Creature : MonoBehaviour
 
     CharacterController characterController;
 
+    AnimationStateChanger animationStateChanger;
+
 
     void Awake(){
+        animationStateChanger = GetComponent<AnimationStateChanger>();
         characterController = GetComponent<CharacterController>();
     }
 
@@ -86,17 +95,19 @@ public class Creature : MonoBehaviour
 
     public void Move(Vector3 unitMovement){
         if(unitMovement.sqrMagnitude == 0){
+            animationStateChanger.ChangeAnimationState("Idle");
             return;
         }
 
         unitMovement = unitMovement.normalized;
-        // transform.localPosition += unitMovement * _baseSpeed * Time.deltaTime;
+
 
         //transform.rotation = Quaternion.LookRotation(unitMovement);
 
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(unitMovement), rotationSpeed * Time.deltaTime);
 
-        characterController.Move(unitMovement * _baseSpeed * Time.deltaTime);
+        animationStateChanger.ChangeAnimationState("Walk", baseWalkSpeed * walkAnimationSpeedMultiplier);
+        characterController.Move(unitMovement * baseWalkSpeed * Time.deltaTime);
     }
 
     bool throwingSmoke = false;
