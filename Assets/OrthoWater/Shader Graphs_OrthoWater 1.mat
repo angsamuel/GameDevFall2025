@@ -63,6 +63,7 @@ Material:
     - _ColorSmoothness: 0
     - _Cull: 2
     - _DstBlend: 10
+    - _DstBlendAlpha: 10
     - _EdgeFix: 0.45
     - _FoamSize: 0.406
     - _GreyZone: 5
@@ -72,6 +73,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _SrcBlend: 5
+    - _SrcBlendAlpha: 1
     - _Step: 0.36
     - _Surface: 1
     - _TimeScale: 0
