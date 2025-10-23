@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Shader Graphs_SimpleTree
-  m_Shader: {fileID: -6465566751694194690, guid: 926f928ec6809d5408b9129d4567fe62, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: ff8489a3ffc95824a9ef51c997512619, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -39,9 +39,13 @@ Material:
     m_Ints: []
     m_Floats:
     - _Add: 0
-    - _Mult: 0.43
+    - _HeightMultiplier: 1.79
+    - _Mult: 0.28
+    - _NoiseScale: 5
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _TimeScale: 0.2
+    - _XMult: -0.46
     m_Colors:
     - _BottomColor: {r: 0.027320892, g: 0.111932434, b: 0.13563336, a: 1}
     - _TopColor: {r: 0, g: 0.4528302, b: 0.09790928, a: 1}

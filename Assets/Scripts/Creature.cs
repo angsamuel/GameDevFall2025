@@ -27,6 +27,9 @@ public class Creature : MonoBehaviour
     public Transform groundReferenceTransform;
     public LayerMask groundLayerMask;
 
+    [Header("Carrying")]
+    public GameObject currentCarriedObject;
+
 
     public int MaxHealth
     {
@@ -93,6 +96,10 @@ public class Creature : MonoBehaviour
         return Physics.OverlapSphere(groundReferenceTransform.position, .25f, groundLayerMask).Length > 0;
     }
 
+    public void Stop(){
+        animationStateChanger.ChangeAnimationState("Idle");
+    }
+
     public void Move(Vector3 unitMovement){
         if(unitMovement.sqrMagnitude == 0){
             animationStateChanger.ChangeAnimationState("Idle");
@@ -108,6 +115,11 @@ public class Creature : MonoBehaviour
 
         animationStateChanger.ChangeAnimationState("Walk", baseWalkSpeed * walkAnimationSpeedMultiplier);
         characterController.Move(unitMovement * baseWalkSpeed * Time.deltaTime);
+    }
+
+    public void MoveToward(Vector3 destination){
+        Vector3 direction = (destination - transform.position).normalized;
+        Move(direction);
     }
 
     bool throwingSmoke = false;
@@ -139,6 +151,17 @@ public class Creature : MonoBehaviour
             yield return null;
             throwingSmoke = false;
         }
+    }
+
+    public void GrabObject(GameObject newObject){
+        newObject.transform.parent = transform;
+        newObject.transform.localPosition = new Vector3(0,.5f,0);
+        currentCarriedObject = newObject;
+    }
+
+    public void DropObject(){
+        currentCarriedObject.transform.parent = null;
+        currentCarriedObject = null;
     }
 
 

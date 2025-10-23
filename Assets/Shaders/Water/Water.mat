@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Test_FalseShadowCube
-  m_Shader: {fileID: -6465566751694194690, guid: 90d322e762b66dd409ed46892e38f1cd, type: 3}
+  m_Name: Water
+  m_Shader: {fileID: -6465566751694194690, guid: cdeb30f8a6e239c488ee04471ad50a1f, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -38,16 +38,16 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _Alpha: 0.57
+    - _FoamDiv: 0.55
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _OverallColor: {r: 0.5943396, g: 0.22761944, b: 0, a: 1}
-    - _XColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-    - _YColor: {r: 1, g: 1, b: 1, a: 1}
-    - _ZColor: {r: 0.25, g: 0.25, b: 0.25, a: 1}
+    - _FoamColor: {r: 1, g: 1, b: 1, a: 1}
+    - _MainColor: {r: 0, g: 0.31236207, b: 0.4056604, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &8233158962927553630
+--- !u!114 &3808283012413462701
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
