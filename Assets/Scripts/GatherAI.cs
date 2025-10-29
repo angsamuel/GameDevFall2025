@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.AI;
 
 public class GatherAI : MonoBehaviour
 {
@@ -16,11 +17,53 @@ public class GatherAI : MonoBehaviour
     public AppleGroup appleGroup;
     public GameObject depot;
 
+    [Header("Navigation Testing")]
+    public Transform goalPos;
+    NavMeshAgent navMeshAgent;
+
+    public delegate IEnumerator TakeObjectState(GameObject value);
+
+
     void Start(){
+
+
         homePosition = transform.position;
         creature = transform.parent.GetComponent<Creature>();
+
+        navMeshAgent = creature.GetComponent<NavMeshAgent>();
         ChangeState(PauseState());
+
+        //creature.GetComponent<CharacterController>().enabled = false;
+
+        // navMeshAgent.isStopped = false;
+        // navMeshAgent.destination = goalPos.position;
+
+
     }
+
+    IEnumerator FollowPathState(GameObject destination, TakeObjectState nextState){
+        NavMeshPath path = new NavMeshPath();
+        navMeshAgent.CalculatePath(destination.transform.position,path);
+        int pathIndex = 0;
+        while(pathIndex<path.corners.Length){
+            Vector3 adjustedPos = path.corners[pathIndex] + new Vector3(0,.5f,0);;
+
+            if(Vector3.Distance(creature.transform.position, adjustedPos) > 0.15f){
+                creature.MoveToward(adjustedPos);
+            }else{
+                pathIndex++;
+            }
+
+            yield return null;
+        }
+        ChangeState(nextState(destination));
+
+        Debug.Log("DONE");
+    }
+
+
+
+
 
     void ChangeState(IEnumerator newState){
         stateTime = 0;
@@ -36,62 +79,32 @@ public class GatherAI : MonoBehaviour
         yield return new WaitForSeconds(3f);
         GameObject nearestApple = appleGroup.FindNearestApple(transform.position);
         if(nearestApple != null){
-            ChangeState(GrabApple(nearestApple));
+            ChangeState(FollowPathState(nearestApple,GrabApple));
             yield break;
         }
 
 
-        ChangeState(PatrolState());
+        ChangeState(PauseState());
         yield break;
-        Debug.Log("Still in state D:")
+
     }
 
     IEnumerator GrabApple(GameObject apple){
 
-        Vector3 correctedApplePos = apple.transform.position;
-        correctedApplePos.y = transform.position.y;
-        //move towads apple
-        while(Vector3.Distance(transform.position,apple.transform.position) > 1f){
-            creature.MoveToward(apple.transform.position);
-            yield return null;
-        }
-
-        //pickup apple
         creature.GrabObject(apple);
-
-        ChangeState(DropOffApple());
-        yield break;
+        ChangeState(FollowPathState(depot,(_)=>DropOffApple()));
         yield return null;
+
     }
 
     IEnumerator DropOffApple(){
-        while(Vector3.Distance(creature.transform.position, depot.transform.position) > 1){
-            creature.MoveToward(depot.transform.position);
-            yield return null;
 
-        }
         creature.DropObject();
-        ChangeState(PatrolState());
-        yield break;
-    }
-
-    IEnumerator PatrolState(){
-
-        Vector3 patrolPos = Random.insideUnitSphere;
-
-        patrolPos *= patrolDist;
-        patrolPos = patrolPos + homePosition;
-
-        patrolPos.y = transform.position.y;
-
-        while((transform.position - patrolPos).sqrMagnitude > 1f){
-            creature.MoveToward(patrolPos);
-            yield return null;
-        }
         ChangeState(PauseState());
         yield break;
-        yield return null;
     }
+
+
 
     IEnumerator GatherState(){
         yield return null;
