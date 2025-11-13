@@ -1,0 +1,4 @@
+meepis=scronkle
+flerp=33
+beepis=1,2,3
+player_save_pos=-1.911617,3.045,-46.40985

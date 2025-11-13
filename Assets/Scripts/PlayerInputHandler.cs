@@ -19,7 +19,14 @@ public class PlayerInputHandler : MonoBehaviour
 
     void Start()
     {
+        SaverLoader.SaveString("meepis","scronkle");
+        SaverLoader.SaveInt("flerp",33);
+        SaverLoader.SaveVector3("beepis",new Vector3(1,2,3));
+        SaverLoader.Flush();
 
+        playerCreature.GetComponent<CharacterController>().enabled = false;
+        playerCreature.transform.position = SaveLoadBus.LoadPlayerPosition(playerCreature.transform.position);
+        playerCreature.GetComponent<CharacterController>().enabled = true;
     }
 
     // Update is called once per frame
@@ -81,6 +88,12 @@ public class PlayerInputHandler : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.R)){
             //reload the scene
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
+        if(Input.GetKeyDown(KeyCode.P)){
+            Debug.Log("SAVED PLAYER POSITION!");
+            SaveLoadBus.SavePlayerPosition(playerCreature.transform.position);
+            SaverLoader.Flush();
         }
 
 

@@ -70,9 +70,9 @@ public class WalkDungeonGenerator : MonoBehaviour
 
             RemoveWall(currentBox, -moveDirection);
 
-            if(step % 2 == 1){
+            //if(step % 2 == 1){
                 moveDirection = directions[Random.Range(0, directions.Count)];
-            }
+            //}
 
 
 
